@@ -35,12 +35,19 @@
     }
     else if (ff == "make")//===========================================================================
     { 
-        findValue = Request.Form["fMake"]; 
-        query="SELECT * FROM carsDetails WHERE cMake='"+findValue+"';";
+        findValue = Request.Form["fMake"];
+        if (findValue == "all")
+        {
+            query = "SELECT * FROM carsDetails;";
+        }
+        else
+        {
+            query = "SELECT * FROM carsDetails WHERE cMake='" + findValue + "';";
+        }
         msg="You look for "+findValue+" cars";
     }
     else if (ff == "model") { }
-    else //===========================================================================
+    else //if (ff == "fPrice")//===========================================================================
     { 
         findValue = Request.Form["fPrice"];
         if (findValue == "1"){
@@ -66,6 +73,12 @@
             msg = "You look for cars with price more than $100.000";
         }
     }
+    //else //===========================================================================
+    //{
+    //    var y = Request.Form["fYear"];
+    //    var m = Request.Form["fMake"];
+    //    var p = Request.Form["fPrice"];
+    //}
 }
 
 <h1>Cars for you</h1>

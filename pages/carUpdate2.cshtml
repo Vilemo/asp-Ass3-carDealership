@@ -11,7 +11,7 @@
     var carPrice = Request["priceU"].AsDecimal();
     var carFeatures = Request["featuresU"];
 
-    var message = "Fill out required fields";
+    var message = "Missing or wrong values in required fields!";
 
     if (carVIN == "" || carMake == "" || carModel == "" || carYear == 0 || carPrice == 0)
     {

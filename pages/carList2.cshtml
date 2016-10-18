@@ -1,0 +1,162 @@
+﻿@{
+    Layout = "../layout.cshtml"; @*layout directive with path to the file creating the layout*@
+    Page.Title = "Cars List";
+}
+@{
+    var iNo = 0;
+    iNo = carsIDLength(iNo); //how many id is in db
+    string[] carsIDArr = new string[iNo];
+    carsIDArr = carIDs(iNo, carsIDArr);
+    var rows = @iNo / 3; //how many full rows
+    var lastRow = @iNo % 3; //how many elements in lastRow row
+    var counter = 0; //element couter, can't be more than @iNo
+    string[] pathIDArray = new string[iNo];
+    pathIDArray = pathID(pathIDArray);
+    string[] picIDArray = new string[iNo];
+    picIDArray = picIDpath(picIDArray);
+}
+
+@functions{  //function declared at the top for better readibility
+    int carsIDLength(int i) //how many IDs is in the db
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails;";
+        
+        foreach (var row in db.Query(query))
+        {
+            i++;
+        }
+        return i;
+    }
+
+    string[] carIDs(int len, string[] arr) //save all IDs in array
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails;";
+        var i = 0;
+        foreach (var row in db.Query(query))
+        {
+            arr[i] = @row.VIN;
+            i++;
+        }
+        return arr;
+    }
+
+    string[] pathID(string[] arr) //path to the file with car's id
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails;";
+        var i = 0;
+        foreach (var row in db.Query(query))
+        {
+            arr[i] = "carDetails.cshtml?car="+@row.VIN;
+            i++;
+        }
+        return arr;   
+    }
+    string[] picIDpath(string[] arr) //path to the file with car's picture
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails;";
+        var i = 0;
+        foreach (var row in db.Query(query))
+        {
+            arr[i] = "/img/"+@row.VIN+".jpg";
+            i++;
+        }
+        return arr;
+    }
+            
+    string carInfo(string vin) //get some details of the cars
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails WHERE VIN='" + vin + "';";
+        
+        foreach (var row in db.Query(query))
+        {
+            Session["name"] = @row.cName;
+            Session["model"] = @row.cModel;
+            Session["make"] = @row.cMake;
+            Session["year"] = @row.cYear;
+            Session["price"] = @row.cPrice;
+        }
+        return "";
+    }
+    string checkPicIDpath(int id, string[] arr)
+    {
+        string[] picPathArr = { "/img/1C4PJM39377.jpg", "/img/JN1BJ0RR6GM.jpg", "/img/R6GM2619373.jpg", "/img/THCZ1BL9GA0.jpg", "/img/WAUFNAF41HN.jpg" };
+        string path=arr[id].ToString();
+        //foreach(string a in picPathArr){
+        //    if (path != a)
+        //    {
+        //        path = "/img/cars.jpg";
+        //    }
+        //}
+        if (path != "/img/1C4PJM39377.jpg" && path != "/img/JN1BJ0RR6GM.jpg" && path != "/img/R6GM2619373.jpg" && path != "/img/THCZ1BL9GA0.jpg" && path != "/img/WAUFNAF41HN.jpg")
+        {
+            path = "/img/cars.jpg";
+        }
+        
+        return path;
+    }
+}
+
+
+    <h1>Cars</h1>
+@*=========================================================================================*@
+@*=========================================================================================*@
+<table>
+    @*full rows*@
+    @for (int i = 0; i < @rows; i++)    
+    {
+        <tr>
+            @for (int j = 0; j < 3; j++, counter++)
+            {
+                @*<td><a href="@pathIDArray[counter]"><img src="@picIDArray[counter]" class="promoPic" /></a></td>*@
+                <td><a href="@pathIDArray[counter]"><img src="@checkPicIDpath(counter, picIDArray)" class="promoPic"/></a></td>
+            }
+        </tr>
+        <tr>
+            @for (int j = (counter - 3); j < counter; j++)
+            {
+                <td style="text-align:center;">
+                    @carInfo(@carsIDArr[j])
+                    <span class="carName">@Session["name"]</span><br /><strong>  @Session["year"] @Session["make"] @Session["model"]</strong><br /><span class="carPrice">$@String.Format("{0:N2}", @Session["price"])</span>
+                </td>
+            }
+        </tr>
+    }
+    @*end of full rows*@
+    @{
+        var counter3 = counter;
+    }
+    @*last, not full row*@
+    <tr>
+        @for (var i = 0; i < @lastRow; i++, counter++)
+        {
+            <td><a href="@pathIDArray[counter]"><img src="@picIDArray[counter]" class="promoPic" /></a></td>
+        }
+    </tr>
+    <tr>
+        @for (var i = 0; i < @lastRow; i++, counter3++)
+        {
+            <td style="text-align:center;">
+                @carInfo(@carsIDArr[counter3])
+                <span class="carName">@Session["name"]</span><br /><strong>  @Session["year"] @Session["make"] @Session["model"]</strong><br /><span class="carPrice">$@Session["price"]</span>
+            </td>
+        }
+    </tr>
+
+
+</table>
+
+
+@*=========================================================================================*@
+@*=========================================================================================*@
+@*<p>arr len::: @iNo</p>
+<p>arr rows::: @rows</p>
+<p>arr last row::: @lastRow</p>
+@foreach (var a in picIDArray)
+{
+    <p>@a</p>
+}*@
