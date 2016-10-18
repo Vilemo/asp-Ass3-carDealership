@@ -1,0 +1,156 @@
+﻿@{
+    Layout = "../layout.cshtml"; @*layout directive with path to the file creating the layout*@
+    Page.Title = "Cars for Admin";
+}
+@{
+    var db = Database.Open("cars");
+    var query = "SELECT * FROM carsDetails;";
+    var i = 1;
+}
+
+
+    <h1>Admin page <span style="font-size:small; text-decoration:none;">(<a href="~/pages/adminPage2.aspx">#___#</a>)</span></h1>
+
+    <table border="1">
+        <tr><th>No</th><th>VIN</th><th>Name</th><th>Make</th><th>Model</th><th>Year</th><th>Color</th><th>Mileage (km)</th><th>Accidents</th><th>Total Demage to Date ($)</th><th>Price ($)</th><th>Special features</th></tr>
+        @foreach (var row in db.Query(query))
+        {
+            <tr>
+                <td>@i</td>
+                <td>@row.VIN</td>
+                <td><strong>@row.cName</strong></td>
+                <td>@row.cMake</td>
+                <td>@row.cModel</td>
+                <td>@row.cYear</td>
+                <td>@row.cColor</td>
+                <td>@row.cMileage</td>
+                <td>@row.cAccidents</td>
+                <td>@row.cTDTD</td>
+                <td>@row.cPrice</td>
+                <td>@row.cFeatures</td>
+            </tr>
+            i++;
+        }
+    </table>
+@*======================================================================================*@
+@*======================================================================================*@
+@*======================================================================================*@
+<hr />
+<table>
+    <tr class="tdNames2"><td>Add new car</td><td>Delete a car</td><td>Update car (I)</td><td>Update car (II)</td></tr>
+    <tr>
+        @*---------ADD---NEW---CAR----------------------------------------*@
+        <td class="borderRight">
+            @{
+                var msg = Request.QueryString["msg"];
+                if (msg != null)
+                {
+                    Response.Write("<script>alert('" + msg + "');</script>");
+                }
+            }
+            <form action="carAdd.cshtml" method="post">
+                <table>
+                    <tr><td class="tdNames">Name:</td><td><input name="name" type="text" /></td></tr>
+                    <tr><td class="tdNames">VIN:</td><td><input name="vin" type="text" /><span style="color:red"> *</span></td></tr>
+                    <tr><td class="tdNames">Make:</td><td><input name="make" type="text" /><span style="color:red"> *</span></td></tr>
+                    <tr><td class="tdNames">Model:</td><td><input name="model" type="text" /><span style="color:red"> *</span></td></tr>
+                    <tr><td class="tdNames">Year:</td><td><input name="year" type="text" /><span style="color:red"> *</span></td></tr>
+                    <tr><td class="tdNames">Color:</td><td><input name="color" type="text" /></td></tr>
+                    <tr><td class="tdNames">Mileage:</td><td><input name="mileage" type="text" /></td></tr>
+                    <tr><td class="tdNames">No of accidents:</td><td><input name="accidents" type="text" /></td></tr>
+                    <tr><td class="tdNames">Total demage to Date:</td><td><input name="tdtd" type="text" /></td></tr>
+                    <tr><td class="tdNames">Price:</td><td><input name="price" type="text" /><span style="color:red"> *</span></td></tr>
+                    <tr><td class="tdNames">Special features:</td><td><textarea name="features" rows="5" cols="22"></textarea></td></tr>
+                    <tr><td style="height:5px"></td><td></td></tr>
+                    <tr><td></td><td><input value="Add" type="submit" width="22" /></td></tr>
+                </table>
+            </form>
+        </td>
+        @*---------DELETE---A---CAR----------------------------------------*@
+        <td class="borderRight">
+            @{
+                var msgDel = Request.QueryString["msgDel"];//if VIN wasn't provided display message
+                if (msgDel != null)
+                {
+                    Response.Write("<script>alert('" + msgDel + "');</script>");
+                }
+                var msgDel2 = Request.QueryString["msgDel2"]; //if no VIN was found in DB
+                if (msgDel2 != null)
+                {
+                    Response.Write("<script>alert('" + msgDel2 + "');</script>");
+                }
+            }
+            <form action="carDel.cshtml" method="post">
+                <table>
+                    <tr><td class="tdNames">car's VIN:</td></tr>
+                    <tr><td><input name="vinDel" type="text" /></td></tr>
+                    <tr><td><input value="Delete" type="submit" /></td></tr>
+                </table>
+            </form>
+        </td>
+        @*---------UPDATE---A---CAR----(I)---------------------------------*@
+        <td class="borderRight">
+            @{
+                var msgUpd = Request.QueryString["msgUpd"];//if VIN wasn't provided display message
+                if (msgUpd != null)
+                {
+                    Response.Write("<script>alert('" + msgUpd + "');</script>");
+                }
+                var msgUpd2 = Request.QueryString["msgUpd2"]; //if no VIN was found in DB
+                if (msgUpd2 != null)
+                {
+                    Response.Write("<script>alert('" + msgUpd2 + "');</script>");
+                }
+            }
+            <form action="carUpdate.cshtml" method="post">
+                <table>
+                    <tr><td class="tdNames">car's VIN:</td></tr>
+                    <tr><td><input name="vinUpd" type="text" /></td></tr>
+                    <tr><td><input value="Update (I)" type="submit" /></td></tr>
+                </table>
+            </form>
+        </td>
+        @*---------UPDATE---A---CAR----(II)--------------------------------*@
+        <td>
+            @{
+                var cVIN = Request.QueryString["cVIN"];
+                var cName = Request.QueryString["cName"];
+                var cMake = Request.QueryString["cMake"];
+                var cModel = Request.QueryString["cModel"];
+                var cYear = Request.QueryString["cYear"];
+                var cColor = Request.QueryString["cColor"];
+                var cMileage = Request.QueryString["cMileage"];
+                var cAccidents = Request.QueryString["cAccidents"];
+                var cTDTD = Request.QueryString["cTDTD"];
+                var cPrice = Request.QueryString["cPrice"];
+                var cFeatures = Request.QueryString["cFeatures"];
+                var showUpdate=Request.QueryString["upd"];
+                if (showUpdate == "yes") //if there was request to update
+                {
+                    <form action="carUpdate2.cshtml" method="post">
+                        <table>
+                            <tr><td class="tdNames">Name:</td><td><input name="nameU" type="text" value="@cName"/></td></tr>
+                            <tr><td class="tdNames">VIN:</td><td><input name="vinU" type="text" value="@cVIN" /><span style="color:red"> *</span></td></tr>
+                            <tr><td class="tdNames">Make:</td><td><input name="makeU" type="text" value="@cMake" /><span style="color:red"> *</span></td></tr>
+                            <tr><td class="tdNames">Model:</td><td><input name="modelU" type="text" value="@cModel" /><span style="color:red"> *</span></td></tr>
+                            <tr><td class="tdNames">Year:</td><td><input name="yearU" type="text" value="@cYear" /><span style="color:red"> *</span></td></tr>
+                            <tr><td class="tdNames">Color:</td><td><input name="colorU" type="text" value="@cColor" /></td></tr>
+                            <tr><td class="tdNames">Mileage:</td><td><input name="mileageU" type="text" value="@cMileage" /></td></tr>
+                            <tr><td class="tdNames">No of accidents:</td><td><input name="accidentsU" type="text" value="@cAccidents" /></td></tr>
+                            <tr><td class="tdNames">Total demage to Date:</td><td><input name="tdtdU" type="text" value="@cTDTD" /></td></tr>
+                            <tr><td class="tdNames">Price:</td><td><input name="priceU" type="text" value="@cPrice" /><span style="color:red"> *</span></td></tr>
+                            <tr><td class="tdNames">Special features:</td><td><textarea name="featuresU" rows="5" cols="22">@cFeatures</textarea></td></tr>
+                            <tr><td style="height:5px"></td><td></td></tr>
+                            <tr><td></td><td><input value="Update (II)" type="submit" width="22" /></td></tr>
+                        </table>
+                    </form>
+                }
+                @*else
+                {
+                                <p>No car found with that VIN</p>
+                            }*@
+            }
+
+        </td>
+    </tr>
+</table>

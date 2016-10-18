@@ -1,0 +1,92 @@
+﻿@{
+    Layout = "../layout.cshtml"; @*layout directive with path to the file creating the layout*@
+    Page.Title = "Car Details";
+}
+@functions{  //function declared at the top for better readibility
+    string carInfo(string vin)
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails WHERE VIN='" + vin + "';";
+
+        foreach (var row in db.Query(query))
+        {
+            Session["name"] = @row.cName;
+            Session["make"] = @row.cMake;
+            Session["model"] = @row.cModel;
+            Session["year"] = @row.cYear;
+            Session["color"] = @row.cColor;
+            Session["mileage"] = @row.cMileage;
+            Session["accidents"] = @row.cAccidents;
+            Session["tdtd"] = @row.cTDTD;
+            Session["price"] = @row.cPrice;
+            Session["features"] = @row.cFeatures;
+        }
+        return "";
+    }
+}
+
+
+@{
+    var carVIN = Request.QueryString["car"];
+    var pic1 = "";
+    var pic2 = "";
+    var pic3 = "";    
+    switch (carVIN)
+    {
+        case "WAUFNAF41HN":
+            pic1 = "/img/Tow_Mater1.png";
+            pic2 = "/img/Tow_Mater2.png";
+            pic3 = "/img/Tow_Mater3.png";
+            @carInfo("WAUFNAF41HN")
+            break;
+        case "1C4PJM39377":
+            pic1 = "/img/Sally1.png";
+            pic2 = "/img/Sally2.jpg";
+            pic3 = "/img/Sally3.jpg";
+            @carInfo("1C4PJM39377")
+            break;
+        case "THCZ1BL9GA0":
+            pic1 = "img/Fillmore1.png";
+            pic2 = "img/Fillmore2.png";
+            pic3 = "img/Fillmore3.png";
+            @carInfo("THCZ1BL9GA0")
+            break;
+        case "R6GM2619373":
+            pic1 = "/img/Luigi1.png";
+            pic2 = "/img/Luigi2.png";
+            pic3 = "/img/Luigi3.png";
+            @carInfo("R6GM2619373")
+            break;
+        case "JN1BJ0RR6GM":
+            pic1 = "/img/Guido1.png";
+            pic2 = "/img/Guido2.png";
+            pic3 = "/img/Guido3.jpg";
+            @carInfo("JN1BJ0RR6GM")
+            break;
+        default:
+            pic1 = "";
+            pic2 = "";
+            pic3 = "/img/Guido4.gif";
+            break;
+    }
+
+}
+
+<div class="inCenter">
+    <img src="@pic1" class="imgCarDetails" /><img src="@pic2" class="imgCarDetails" /><img src="@pic3" class="imgCarDetails" />
+</div>
+<div class="inCenter">
+    
+    <span class="carName">@Session["name"]</span>
+    <br />
+    <br /><strong>Make: </strong> @Session["make"] 
+    <br /><strong>Model: </strong> @Session["model"]
+    <br /><strong>Year: </strong> @Session["year"]
+    <br /><strong>Color: </strong> @Session["color"]
+    <br /><strong>Mileage: </strong> @String.Format("{0:N2}", @Session["mileage"])km
+    <br /><strong>Accidents: </strong> @Session["Accidents"]
+    <br /><strong>Total demage to date: </strong>$@String.Format("{0:N2}", @Session["tdtd"])
+    <br /><strong>Special features: </strong> @Session["features"]
+    <br />
+    <br /><strong>Price: </strong><span class="carPrice">$@String.Format("{0:N2}", @Session["price"])</span>
+</div>

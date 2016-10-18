@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "../layout.cshtml"; @*layout directive with path to the file creating the layout*@
+    Page.Title = "Login for Admin";
+}
+
+@{
+    if (Session["adminOK"] == "true")
+    {
+        Response.Redirect("adminPage.cshtml");
+    }
+}
+
+
+<h1>Admin Login</h1>
+<form method="post" action="loginCheck.cshtml">
+    Admin name: <br /><input name="aName" type="text" /><br />
+    Admin Pass: <br /><input name="aPass" type="text" /><br />
+    <input name="submit" type="submit" value="LOGIN" />
+</form>
+
+@{
+    var m=Request.QueryString["msg"];
+    if (m != null)
+    {
+        <p style="color:red;font-size:large;">@m</p>        
+    }
+}

@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "../layout.cshtml"; @*layout directive with path to the file creating the layout*@
+}
+@{
+    var listYear = new List<SelectListItem>
+    {
+        new SelectListItem{ Text="----All years----", Value="all"},
+        new SelectListItem{ Text="before 1960s", Value="1"},
+        new SelectListItem{ Text="1960s-1980s", Value="2"},
+        new SelectListItem{ Text="1980s-2000s", Value="3"},
+        new SelectListItem{ Text="After 2000s", Value="4"},
+    };
+    var listMake = new List<SelectListItem>
+    {
+        new SelectListItem{ Text="----All makes----", Value="all"},
+        new SelectListItem{ Text="BMV", Value="BMV"},
+        new SelectListItem{ Text="Fiat", Value="Fiat"},
+        new SelectListItem{ Text="Ford", Value="Ford"},
+        new SelectListItem{ Text="GMC", Value="GMC"},
+        new SelectListItem{ Text="Porshe", Value="Porshe"},
+        new SelectListItem{ Text="Toyota", Value="Toyota"},
+        new SelectListItem{ Text="Volkswagen", Value="Volkswagen"},
+        new SelectListItem{ Text="Forklift", Value="Forklift"}
+    };
+
+}
+
+@{
+    <h1>Find your car</h1>
+    
+    <table border="1">
+        <tr><th>Choose a year</th><th>Chose a make</th><th>Search by model</th><th>Search by price</th></tr>
+        <tr>
+            <td>
+                <form action="findCar2.cshtml?f=year" method="post">
+                    @Html.DropDownList("fYear", listYear, new { onchange = "getAlldata()" })
+                    <input value="Find" type="submit" />
+                </form>
+            </td>
+            <td>
+                <form action="findCar2.cshtml?f=make" method="post">
+                    @Html.DropDownList("fMake", listMake, new { onchange = "getAlldata()" })
+                    <input value="Find" type="submit" />
+                </form>
+            </td>
+            <td></td>
+            <td>
+                <form action="findCar2.cshtml?f=price" method="post">
+                    <select name="fPrice">
+                        <option value="1">below 15.000</option>
+                        <option value="2">15.000-30.000</option>
+                        <option value="3">30.000-50.000</option>
+                        <option value="4">50.000-100.000</option>
+                        <option value="5">over 100.000</option>
+                    </select>
+                    <input value="Find" type="submit" />
+                </form>
+            </td>
+        </tr>
+    </table>
+}
+

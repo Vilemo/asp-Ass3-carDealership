@@ -1,0 +1,107 @@
+﻿body {
+    margin:0;
+    padding:0;
+    background-color:#c9fed0;
+    color:#0a3523;
+
+    background: url('img/cars-Radiator-Spring.jpg') no-repeat center center fixed;  
+    background-size: cover; /*full screen*/
+}
+/*==============================================================*/
+#headerDiv, #mainDiv, footer{ /*common features*/
+    margin:5px auto;/*to keep space between headerDiv, mainDiv, footer*/
+    padding:5px; 
+    background-color:#94ffa2;
+    border: 1px solid black;
+    overflow: hidden; /*to expand the div to cover all its elements -when using float it messes the positioning*/
+    width:1111px;
+}
+img{
+    padding:5px;
+}
+#three-d { /*page title in header*/
+    color: #fff;
+    text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+    font: 75px 'ChunkFiveRegular';
+}
+/*==============================================================*/
+#headerDiv{
+}
+#headerDiv img{
+    height:122px;
+    float:left;
+}
+nav ul{
+    list-style:none;
+}
+nav li {
+    float: left;
+    border-right: 1px solid #c9fed0;/* Add a gray right border to all list items, except the last item (last-child) */
+}
+nav li:last-child { /* Add a gray right border to all list items, except the last item (last-child) */
+    border-right: none;
+}
+nav a{
+    display:inline;
+    padding: 8px 15px;
+    background-color: #22b435;
+    color:#c9fed0;
+    text-decoration:none;
+}
+nav a:hover{
+    background-color:#c9fed0;
+    color:#22b435;
+}
+/*==============================================================*/
+footer{
+    text-align:center;
+}
+/*==============================================================*/
+/*==============================================================*/
+#mainDiv{
+
+}
+ .tdNames{
+     font-weight:bold;
+ }
+ .tdNames2{
+     text-align:center;
+ }
+.borderRight{
+    border-right: 1px solid #ccc;
+    vertical-align:top;
+ }
+.promoPic{
+    width:333px;
+}
+.carName {
+    font-size:2em;
+    color:red;
+    text-shadow: 0px -2px 0px #333, 0px 2px 3px #666;
+
+}
+.carPrice{
+color: #fff;
+font-size: 2em;
+font-weight: bold;
+font-family: Helvetica;
+text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+}
+/*==============================================================*/
+/*==============================================================*/
+.inCenter{
+    text-align:center;
+}
+.imgCarDetails{
+    width: 300px;
+    padding:10px;
+}
+h1{
+    color: #ff0000; 
+    font-family: 'Lobster', cursive; 
+    font-size: 36px; 
+    font-weight: normal; 
+    line-height: 48px; 
+    margin: 0 0 18px 50px; 
+    text-shadow: 1px 0 0 #fff;
+}

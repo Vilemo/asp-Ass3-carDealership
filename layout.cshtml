@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>
+
+    </title>
+    <link href="~/myStyle.css" rel="stylesheet" />
+</head>
+<body>
+    @*<div id="headerDiv">
+        <header>
+            <img src="~/img/Cars-Logo.png" />
+            <h1 id="three-d">Cars from Radiator Spring</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="~/pages/Home.cshtml" >Home</a></li>
+                <li><a href="~/pages/carList.cshtml" >View Cars</a></li>
+                <li><a href="~/pages/findCar.cshtml" >Find Car</a></li>
+                <li><a href="~/pages/about.cshtml" >Contact & About</a></li>
+                <li><a href="~/pages/login.cshtml">Admin Login</a></li>
+            </ul>
+        </nav>
+    </div>*@
+
+    <div id="headerDiv">
+        <table>
+            <tr>
+                <td rowspan="2"><img src="~/img/Cars-Logo.png" /></td>
+                <td><h1 id="three-d">Cars from Radiator Spring</h1></td>
+            </tr>
+            <tr>
+                <td>
+                    <nav>
+                        <ul>
+                            <li><a href="~/pages/Home.cshtml">Home</a></li>
+                            <li><a href="~/pages/carList.cshtml">View Cars</a></li>
+                            <li><a href="~/pages/findCar.cshtml">Find Car</a></li>
+                            <li><a href="~/pages/about.cshtml">Contact & About</a></li>
+                            <li><a href="~/pages/login.cshtml">Admin Login</a></li>
+                        </ul>
+                    </nav>
+                </td>
+            </tr>
+        </table>
+</div>
+
+
+        <div id="mainDiv">
+            @RenderBody()
+        </div>
+        <footer>
+            <small>&copy; 2016 All rights Reserved by ME</small>
+        </footer>
+</body>
+</html>

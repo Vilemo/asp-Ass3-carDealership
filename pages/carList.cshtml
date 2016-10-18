@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "../layout.cshtml"; @*layout directive with path to the file creating the layout*@
+    Page.Title = "Cars List";
+}
+@{
+    //var Mater = "<span class='carName'>Sir Tow Mater</span><br/><span class='carDetails'><strong>" + @MatterYear + " " + @MatterMake + " " + @MatterModel+"</strong><br/>"+@MatterPrice+"</span>";
+    //var db = Database.Open("cars");
+    //string query;
+    
+    //var model = "";
+    //var make = "";
+    //var year = 0;
+    //var price = 0.0;
+    
+}
+@functions{  //function declared at the top for better readibility
+    string carInfo(string vin)
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails WHERE VIN='" + vin + "';";
+        //var name = "";
+        //var model = "";
+        //var make = "";
+        //var year = 0;
+        //var price = 0.0;
+        
+        foreach (var row in db.Query(query))
+        {
+            Session["name"] = @row.cName;
+            Session["model"] = @row.cModel;
+            Session["make"] = @row.cMake;
+            Session["year"] = @row.cYear;
+            Session["price"] = @row.cPrice;
+        }
+        return "";
+    }
+}
+
+    <h1>Cars</h1>
+    <table> @*first row with car picture as link to details, second row with car details, ...*@
+        <tr><td><a href="carDetails.cshtml?car=WAUFNAF41HN"><img src="~/img/Tow%20Matter.jpg" class="promoPic" /></a></td>
+            <td><a href="carDetails.cshtml?car=1C4PJM39377"><img src="~/img/Sally.jpg" class="promoPic" /></a></td>
+            <td><a href="carDetails.cshtml?car=THCZ1BL9GA0"><img src="~/img/Filmore.jpg" class="promoPic" /></a></td>
+        </tr>
+        <tr>
+            <td style="text-align:center;">
+                @carInfo("WAUFNAF41HN")
+                <span class="carName">@Session["name"]</span><br /><strong>  @Session["year"] @Session["make"] @Session["model"]</strong><br /><span class="carPrice">$@Session["price"]</span>
+            </td>
+            <td style="text-align:center;">
+                @carInfo("1C4PJM39377")
+                <span class="carName">@Session["name"]</span><br /><strong>  @Session["year"] @Session["make"] @Session["model"]</strong><br /><span class="carPrice">$@Session["price"]</span>
+            </td>
+            <td style="text-align:center;">
+                @carInfo("THCZ1BL9GA0")
+                <span class="carName">@Session["name"]</span><br /><strong>  @Session["year"] @Session["make"] @Session["model"]</strong><br /><span class="carPrice">$@Session["price"]</span>
+            </td>
+        </tr>
+        <tr>
+            <td><a href="carDetails.cshtml?car=R6GM2619373"><img src="~/img/Luigi.jpg" class="promoPic" /></a></td>
+            <td><a href="carDetails.cshtml?car=JN1BJ0RR6GM"><img src="~/img/Guido.jpg" class="promoPic" /></a></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="text-align:center;">
+                @carInfo("R6GM2619373")
+                <span class="carName">@Session["name"]</span><br /><strong>  @Session["year"] @Session["make"] @Session["model"]</strong><br /><span class="carPrice">$@Session["price"]</span>
+            </td>
+            <td style="text-align:center;">
+                @carInfo("JN1BJ0RR6GM")
+                <span class="carName">@Session["name"]</span><br /><strong>  @Session["year"] @Session["make"] @Session["model"]</strong><br /><span class="carPrice">$@Session["price"]</span>
+            </td>
+            <td style="text-align:center;"></td>
+        </tr>
+
+    </table>
+

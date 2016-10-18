@@ -1,0 +1,25 @@
+http://pixar.wikia.com/wiki/Cars
+http://www.richmondautomall.com/vehicle/2017-audi-a4-3813363
+http://www.budgetcarsales.ca/search?sortBy=date&mode=inventory#
+=======================================================
+CREATE DATABASE cars;
+===================================================
+CREATE TABLE carsDetails(
+VIN varchar(17) PRIMARY KEY,
+cName varchar(25),
+cMake varchar(20),
+cModel varchar(20),
+cYear int,
+cColor varchar(15),
+cMileage double precision,
+cAccidents int,
+cTDTD double precision,
+cPrice double precision,
+cFeatures varchar(255)
+);
+INSERT INTO carsDetails (VIN, cName, cMake, cModel, cYear, cColor, cMileage, cAccidents, cTDTD, cPrice, cFeatures)
+VALUES('WAUFNAF41HN', 'Tow mater', 'truck', 'Haulitan Hookem', 1951, 'baby blue', 77365.01, 543, 9.99, 55602.00,'Self-proclaimed Worlds-Best-Backwards-Driver, 2 BBL Carb that runs on 6 or 7 cylinders');
+VALUES('1C4PJM39377', 'Sally', 'Porshe', 'Carrera', 2002, 'baby blue', 44875.32, 0, 0, 123000.00, 'sports a pinstripe tatoo, can reach speed up to 117mph, owner of Cozy Cone Motel');
+VALUES('THCZ1BL9GA0', 'Filmore', 'Volkswagen', 'Bus', 1960, 'flowery', 24133.53, 1, 190.00, 14999.00, 'original paint job, organic fuel and oil and prake pads');
+VALUES('R6GM2619373', 'Luigi', 'Fiat', '500', 1959, 'yellow', 33982.31, 0, 0, 15999.00, 'die-hard Ferrari race fan, 500cc engine with 4-speed gearbox, owner of tire shop: Luigi's Casa Della Tires');
+VALUES('JN1BJ0RR6GM', 'Guido', 'Forklift', 'Alza/Tutto', 1977, 'blue', 28973.12, 2, 432.00, 22450.00, 'can change tire in 2.5 seconds flat, electrically powered engine, only knows two words in English: Pit Stop!');

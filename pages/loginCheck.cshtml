@@ -1,0 +1,20 @@
+﻿@{
+    var adminName = "Admin";
+    var adminPass = "Admin123";
+    bool admin = false;
+    var aName = Request["aName"];
+    var aPass = Request["aPass"];
+    var message = "Wrong login info!";
+
+        if (aName == adminName && aPass == adminPass)
+        {
+            admin = true;
+            Session["adminOK"]=admin;
+            Response.Redirect("adminPage.cshtml");
+        }
+        else
+        {
+            Response.Redirect("login.cshtml?msg="+message);
+            //Response.Write("<scritp>alert('Wrong login info');</script>");
+        }
+}

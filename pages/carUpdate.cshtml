@@ -1,0 +1,50 @@
+﻿@{
+    var carVIN = Request.Form["vinUpd"];
+    var message = "Fill out VIN number";
+
+    if (carVIN == "")
+    {
+        Response.Redirect("adminPage.cshtml?msgUpd=" + message);
+    }
+    else{
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails WHERE VIN='" + carVIN + "';";
+        var i = 0;
+        var cVIN = "";
+        var cName = "";
+        var cMake = "";
+        var cModel = "";
+        var cYear=0;
+        var cColor="";
+        var cMileage=0.0;
+        var cAccidents=0;
+        var cTDTD=0.0;
+        var cPrice=0.0;
+        var cFeatures="";
+        foreach (var row in db.Query(query))
+        {
+            i++;
+            cVIN = @row.VIN;
+            cName = @row.cName;
+            cMake = @row.cMake;
+            cModel = @row.cModel;
+            cYear = @row.cYear;
+            cColor = @row.cColor;
+            cMileage = @row.cMileage;
+            cAccidents = @row.cAccidents;
+            cTDTD = @row.cTDTD;
+            cPrice = @row.cPrice;
+            cFeatures = @row.cFeatures;
+        }
+        if (i == 0) //no VIN found
+        {
+            Response.Redirect("adminPage.cshtml?msgUpd2=" + "No car found with that VIN");
+        }
+        else
+        {
+            Response.Redirect("adminPage.cshtml?upd=yes&cVin=" + cVIN + "&cName=" + cName + "&cMake=" + cMake + "&cModel=" + cModel + "&cYear=" + cYear + "&cColor=" + cColor + "&cMileage=" +
+                cMileage + "&cAccidents=" + cAccidents + "&cTDTD=" + cTDTD + "&cPrice=" + cPrice + "&cFeatures=" + cFeatures);
+        }
+
+    }
+}

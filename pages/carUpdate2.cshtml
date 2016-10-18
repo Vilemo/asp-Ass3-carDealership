@@ -1,0 +1,41 @@
+﻿@{
+    var carName = Request["nameU"];
+    var carVIN = Request.Form["vinU"];
+    var carMake = Request["makeU"];
+    var carModel = Request["modelU"];
+    var carYear = Request["yearU"].AsInt();
+    var carColor = Request["colorU"];
+    var carMileage = Request["mileageU"].AsDecimal();
+    var carAccidents = Request["accidentsU"].AsInt();
+    var carTDTD = Request["tdtdU"].AsDecimal();
+    var carPrice = Request["priceU"].AsDecimal();
+    var carFeatures = Request["featuresU"];
+
+    var message = "Fill out required fields";
+
+    if (carVIN == "" || carMake == "" || carModel == "" || carYear == 0 || carPrice == 0)
+    {
+        Response.Redirect("adminPage.cshtml?msg=" + message);
+        //Response.Write("<script>alert('');</script>");
+    }
+    else
+    {
+        if (carName == "") { carName = "-"; }
+        else if (carColor == "") { carColor = "-"; }
+        else if (carMileage == 0) { carMileage = 0; }
+        else if (carAccidents == 0) { carAccidents = 0; }
+        else if (carTDTD == 0) { carTDTD = 0; }
+        else if (carFeatures == "") { carFeatures = "-"; }
+
+        var db = Database.Open("cars");
+        //var query2 = "INSERT INTO carsDetails (VIN, cName, cMake, cModel, cYear, cColor, cMileage, cAccidents, cTDTD, cPrice, cFeatures)" +
+        //    "VALUES('" + carVIN + "', '" + carName + "', '" + carMake + "', '" + carModel + "', " + carYear + ", '" + carColor + "', " + carMileage + ", " + carAccidents + ", " + carTDTD + ", " + carPrice + ", '" + carFeatures + "');";
+        
+        var query= "UPDATE carsDetails SET cName='"+carName+"', cMake='"+carMake+"', cModel='"+carModel+"', cYear="+carYear+", cColor='"+carColor+"', cMileage="+carMileage+
+            ", cAccidents="+carAccidents+", cTDTD="+carTDTD+", cPrice="+carPrice+", cFeatures='"+carFeatures+ "' WHERE VIN='"+carVIN+"';";
+        db.Query(query);
+
+        Response.Redirect("adminPage.cshtml");
+
+    }
+}

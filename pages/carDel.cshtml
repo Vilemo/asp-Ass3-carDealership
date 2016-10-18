@@ -1,0 +1,34 @@
+﻿@{
+    var carVIN = Request.Form["vinDel"];
+    var message = "Fill out VIN number";
+
+    if (carVIN == "")
+    {
+        Response.Redirect("adminPage.cshtml?msgDel=" + message);
+    }
+    else
+    {
+        var db = Database.Open("cars");
+        var query = "SELECT * FROM carsDetails WHERE VIN='" + carVIN + "';"; //
+        var i = 0;
+        foreach (var row in db.Query(query))
+        {
+            i++;
+        }
+        if (i == 0) //no VIN found
+        {
+            Response.Redirect("adminPage.cshtml?msgDel2=" + "No car found with that VIN");
+        }
+        else //VIN found, delete record
+        {
+            query = "DELETE FROM carsDetails WHERE VIN='" + carVIN + "';";
+            db.Query(query);
+            Response.Redirect("adminPage.cshtml");
+        }
+        
+        
+        
+
+        
+    }
+}

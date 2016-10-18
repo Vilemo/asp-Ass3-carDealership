@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "../layout.cshtml"; @*layout directive with path to the file creating the layout*@
+}
+@{
+    var db = Database.Open("cars");
+    var query = "";
+    var msg = "";
+    var i = 1;
+
+    string ff = Request.QueryString["f"].ToString(); //f=year or make or price
+    var findValue = "";
+    if (ff == "year") //===========================================================================
+    {
+        findValue = Request.Form["fYear"];
+        if (findValue == "1") { 
+            query = "SELECT * FROM carsDetails WHERE cYear < 1960;";
+            msg = "You look for cars from before 1960s";
+        }
+        else if (findValue == "2") {
+            query = "SELECT * FROM carsDetails WHERE cYear > 1960 AND cYear < 1980;";
+            msg = "You look for cars from 1960s-1980s";
+        }
+        else if (findValue == "3") {
+            query = "SELECT * FROM carsDetails WHERE cYear > 1980 AND cYear < 2000;";
+            msg = "You look for cars from 1980s-2000s";
+        }
+        else if (findValue == "4") {
+            query = "SELECT * FROM carsDetails WHERE cYear > 2000;";
+            msg = "You look for cars from 2000s";
+        }
+        else {
+            query = "SELECT * FROM carsDetails ORDER BY cYear;";
+            msg = "You look for all cars";
+        }
+    }
+    else if (ff == "make")//===========================================================================
+    { 
+        findValue = Request.Form["fMake"]; 
+        query="SELECT * FROM carsDetails WHERE cMake='"+findValue+"';";
+        msg="You look for "+findValue+" cars";
+    }
+    else if (ff == "model") { }
+    else //===========================================================================
+    { 
+        findValue = Request.Form["fPrice"];
+        if (findValue == "1"){
+            query = "SELECT * FROM carsDetails WHERE cPrice<15000";
+            msg = "You look for cars with price below $15.000";
+        }
+        else if (findValue == "2"){
+            query = "SELECT * FROM carsDetails WHERE cPrice>15000 AND cPrice<30000";
+            msg = "You look for cars with price between $15.000 and $30.000";
+        }
+        else if (findValue == "3")
+        {
+            query = "SELECT * FROM carsDetails WHERE cPrice>30000 AND cPrice<50000";
+            msg = "You look for cars with price between $30.000 and $50.000";
+        }
+        else if (findValue == "4")
+        {
+            query = "SELECT * FROM carsDetails WHERE cPrice>50000 AND cPrice<100000";
+            msg = "You look for cars with price between $50.000 and $100.000";
+        }
+        else {
+            query = "SELECT * FROM carsDetails WHERE cPrice>100000";
+            msg = "You look for cars with price more than $100.000";
+        }
+    }
+}
+
+<h1>Cars for you</h1>
+<p>@msg</p>
+<table border="1">
+    <tr><th>No</th><th>VIN</th><th>Name</th><th>Make</th><th>Model</th><th>Year</th><th>Color</th><th>Mileage (km)</th><th>Accidents</th><th>Total Demage to Date ($)</th><th>Price ($)</th><th>Special features</th></tr>
+    @foreach (var row in db.Query(query))
+    {
+        <tr>
+            <td>@i</td>
+            <td>@row.VIN</td>
+            <td><strong>@row.cName</strong></td>
+            <td>@row.cMake</td>
+            <td>@row.cModel</td>
+            <td>@row.cYear</td>
+            <td>@row.cColor</td>
+            <td>@row.cMileage</td>
+            <td>@row.cAccidents</td>
+            <td>@row.cTDTD</td>
+            <td>@row.cPrice</td>
+            <td>@row.cFeatures</td>
+        </tr>
+        i++;
+    }
+</table>
+@if (i == 1) {<p>Sorry, no car found</p>}
+
+
